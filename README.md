@@ -1,4 +1,4 @@
-# Upload files to a GitHub release [![GitHub Actions Workflow](https://github.com/svenstaro/upload-release-action/workflows/PR%20Checks/badge.svg)](https://github.com/svenstaro/upload-release-action/actions)
+# Upload files to a GitHub release
 
 This action allows you to select which files to upload to the just-tagged release.
 It runs on all operating systems types offered by GitHub.
@@ -7,15 +7,13 @@ It runs on all operating systems types offered by GitHub.
 
 You must provide:
 
-- `token`: Usually you'll want to set this to `${{ secrets.GITHUB_TOKEN }}`.
+- `token`: GitHub token for uploading assets to releases, defaults to using secrets.GITHUB_TOKEN
 - `file`: A local file to be uploaded as the asset.
 - `tag`: The tag to upload into. If you want the current event's tag or branch name, use `${{ github.ref }}` (the `refs/tags/` and `refs/heads/` prefixes will be automatically stripped).
 
 Optional Arguments
 
-- `asset_name`: The name the file gets as an asset on a release. Use `$tag` to include the tag name. When not provided it will default to the filename.
-                This is not used if `file_glob` is set to `true`.
-- `file_glob`: If set to true, the file argument can be a glob pattern (`asset_name` is ignored in this case) (Default: `false`)
+- `asset_name`: The name the file gets as an asset on a release.
 - `overwrite`: If an asset with the same name already exists, overwrite it (Default: `false`).
 - `repo_name`: Specify the name of the GitHub repository in which the GitHub release will be created, edited, and deleted. If the repository is other than the current, it is required to create a personal access token with `repo`, `user`, `admin:repo_hook` scopes to the foreign repository and add it as a secret. (Default: current repository).
 
@@ -95,33 +93,6 @@ jobs:
         file: target/release/${{ matrix.artifact_name }}
         asset_name: ${{ matrix.asset_name }}
         tag: ${{ github.ref }}
-```
-
-Example with `file_glob`:
-
-```yaml
-name: Publish
-on:
-  push:
-    tags:
-      - '*'
-
-jobs:
-  build:
-    name: Publish binaries
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --release
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/my*
-        tag: ${{ github.ref }}
-        overwrite: true
-        file_glob: true
 ```
 
 Example for creating a release in a foreign repository using `repo_name`:
