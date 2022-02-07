@@ -17,16 +17,18 @@ inputs:
     required: true
   asset_name:
     description: "Name of the asset attached to the release"
-    require: true
+    required: true
   overwrite:
     description: "Overwrite the asset if it already exists"
+    required: false
   repo_name:
     description: "Specify the name of the GitHub repository in which the GitHub release will modified. If the repository is other than the current, it is required to create a personal access token with `repo`, `user`, `admin:repo_hook` scopes to the foreign repository and add it as a secret. Defaults to the current repository"
+    required: false
 outputs:
   browser_download_url:
     description: "The publicly available URL of the asset"
   notes:
     description: "The body of the release"
 runs:
-  using: "node12";
-  main: "dist/index.js";
+  using: "node12"
+  main: "dist/index.js"
