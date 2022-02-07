@@ -1,6 +1,6 @@
 {
   "name": "upload-release-action",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "description": "Upload files to a GitHub release",
   "main": "dist/index.js",
