@@ -79,16 +79,16 @@ function repo(): {owner: string; repo: string} {
   if (!repo_name) {
     return github.context.repo;
   }
-  const [owner, repo] = repo_name.split("/");
+  const [owner, repository] = repo_name.split("/");
   if (!owner) {
     throw new Error(`Could not extract 'owner' from 'repo_name': ${repo_name}.`);
   }
-  if (!repo) {
+  if (!repository) {
     throw new Error(`Could not extract 'repo' from 'repo_name': ${repo_name}.`);
   }
   return {
     owner,
-    repo,
+    repo: repository,
   };
 }
 
